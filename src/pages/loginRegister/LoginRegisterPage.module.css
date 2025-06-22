@@ -1,0 +1,48 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.loginBox {
+  background-color: rgb(250, 245, 240);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px gray;
+}
+.toggleBtn {
+  background-color: rgb(217, 220, 233);
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.toggleBtn:hover {
+  background-color: rgb(190, 193, 210);
+}
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.submitBtn {
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+}
+.submitBtn:hover {
+  background-color: #154caa;
+}
