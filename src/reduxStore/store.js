@@ -11,6 +11,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["auth"], // persist edeceğin reducer'ları belirt
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -32,5 +33,6 @@ export const store = configureStore({
     }),
 });
 
-export const persistor = persistStore(store); // <- Burada persistor export edilmeli
+export const persistor = persistStore(store);
+
 export default store;

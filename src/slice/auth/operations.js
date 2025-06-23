@@ -37,10 +37,11 @@ export const login = createAsyncThunk(
   }
 );
 
+// Logout sadece header temizler, localStorage temizliği dışarıda yapılacak
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await axios.post("/users/logout");
     clearAuthHeader();
+    return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -57,7 +58,7 @@ export const refreshUser = createAsyncThunk(
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await axios.get("/users/current");
+      const response = await axios.get("/users/me");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import Styles from "./LoginRegisterPage.module.css";
+import { useDispatch } from "react-redux";
+import { login, register } from "../../slice/auth/operations";
 
 const LoginRegisterPage = () => {
+  const dispatch = useDispatch();
   const [showLogin, setShowLogin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,20 +24,27 @@ const LoginRegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("Form submit oldu:", formData, "Login mi?:", showLogin); "çalışıyor"
     if (showLogin) {
-      console.log("Giriş verileri:", formData);
+      dispatch(login({ email: formData.email, password: formData.password }));
     } else {
-      console.log("Kayıt verileri:", formData);
+      dispatch(register(formData));
     }
+
+    // Formu gönderim sonrası temizle
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
     <div className={Styles.loginContainer}>
       <div className={Styles.loginBox}>
         <button
+          type="button" // submit değil toggle olduğu için type button
           className={Styles.toggleBtn}
-          onClick={() => setShowLogin(!showLogin)}
+          onClick={() => setShowLogin((prev) => !prev)}
         >
           {showLogin ? "Kayıt ekranına git" : "Giriş ekranına git"}
         </button>
@@ -40,8 +52,9 @@ const LoginRegisterPage = () => {
         <form className={Styles.loginForm} onSubmit={handleSubmit}>
           {!showLogin && (
             <div className={Styles.formGroup}>
-              <label>İsim</label>
+              <label htmlFor="name">İsim</label>
               <input
+                id="name"
                 type="text"
                 name="name"
                 value={formData.name}
@@ -53,8 +66,9 @@ const LoginRegisterPage = () => {
           )}
 
           <div className={Styles.formGroup}>
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email}
@@ -64,16 +78,33 @@ const LoginRegisterPage = () => {
             />
           </div>
 
-          <div className={Styles.formGroup}>
-            <label>Password</label>
+          <div className={Styles.formGroup} style={{ position: "relative" }}>
+            <label htmlFor="password">Password</label>
             <input
-              type="password"
+              id="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="Şifrenizi girin"
               required
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              style={{
+                position: "absolute",
+                right: 0,
+                top: "72%", // Burayı 60% yaptım, 50%'den daha aşağıda olur
+                transform: "translateY(-40%)",
+                cursor: "pointer",
+                background: "transparent",
+                border: "none",
+                color: "#007bff",
+              }}
+            >
+              {showPassword ? "Gizle" : "Göster"}
+            </button>
           </div>
 
           <button type="submit" className={Styles.submitBtn}>
